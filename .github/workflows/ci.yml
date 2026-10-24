@@ -1,0 +1,81 @@
+name: Checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: "0.12.10"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --project backend --python 3.12 --locked
+      - run: uv run --project backend --locked pytest backend/tests -q
+  frontend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend
+      - run: npm run build --prefix frontend
+  containers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: docker compose config --quiet
+      - run: docker compose build
+      # Карты не скачиваются в CI: проверяем запуск приложений и API-прокси.
+      # Реальная маршрутизация проверяется отдельными интеграционными тестами.
+      - run: docker compose up -d --no-deps --wait --wait-timeout 60 backend
+      - run: docker compose up -d --no-deps --wait --wait-timeout 60 frontend
+      - name: Check frontend and backend connection
+        run: |
+          curl --fail --silent http://127.0.0.1:8080/ > /dev/null
+          curl --fail --silent http://127.0.0.1:8080/api/health
+          curl --fail --silent http://127.0.0.1:8080/api/config > /dev/null
+          curl --fail --silent http://127.0.0.1:8080/api/scenic-segments > /dev/null
+      - if: failure()
+        run: docker compose logs
+      - if: always()
+        run: docker compose down
+  app-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: docker compose -f compose.external.yml config --quiet
+      - run: docker compose -f compose.external.yml build
+      - run: docker compose -f compose.external.yml up -d --wait --wait-timeout 60
+      - name: Check combined app
+        run: |
+          curl --fail --silent http://127.0.0.1:8080/ > /dev/null
+          curl --fail --silent http://127.0.0.1:8080/api/health
+          curl --fail --silent http://127.0.0.1:8080/api/scenic-segments > /dev/null
+      - if: failure()
+        run: docker compose -f compose.external.yml logs
+      - if: always()
+        run: docker compose -f compose.external.yml down

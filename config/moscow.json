@@ -1,0 +1,61 @@
+{
+  "name": "Москва, центральная часть",
+  "center": [
+    55.751244,
+    37.618423
+  ],
+  "bounds": {
+    "south": 55.7,
+    "north": 55.81,
+    "west": 37.52,
+    "east": 37.71
+  },
+  "min_distance_meters": 50,
+  "max_snap_meters": 150,
+  "loop": {
+    "max_candidates": 18,
+    "request_budget_seconds": 40,
+    "min_duration_ratio": 0.8,
+    "max_duration_ratio": 1.1,
+    "segment_tolerance_meters": 25,
+    "min_segment_coverage_ratio": 0.8,
+    "nearby_radius_meters": 10000,
+    "max_segments_per_candidate": 3,
+    "max_catalog_segments": 30,
+    "max_table_coordinates": 96,
+    "estimated_speed_kmh": 30,
+    "road_distance_factor": 1.4
+  },
+  "ranking": {
+    "max_routes": 3,
+    "repeat_tolerance_meters": 12,
+    "repeat_sample_meters": 25,
+    "repeat_allowance_meters": 150,
+    "max_repeat_ratio": 0.55,
+    "similarity_tolerance_meters": 25,
+    "max_similarity_ratio": 0.8,
+    "scenic_length_scale_meters": 2000,
+    "min_credited_length_meters": 30,
+    "weights": {
+      "scenic_length": 1.0,
+      "scenic_fraction": 2.0,
+      "diversity": 0.2,
+      "repeats": 2.0,
+      "duration_deviation": 1.0,
+      "preference_match": 3.0
+    },
+    "category_threshold": 0.6
+  },
+  "routing": {
+    "cache_ttl_seconds": 300,
+    "cache_max_entries": 128,
+    "table_attempts": 2
+  },
+  "point_to_point": {
+    "corridor_meters": 3000,
+    "max_candidates": 17,
+    "request_budget_seconds": 40,
+    "min_beauty_gain_meters": 50,
+    "max_alternatives": 2
+  }
+}

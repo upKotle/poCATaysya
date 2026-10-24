@@ -1,0 +1,46 @@
+name: Publish app image
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: publish-app-image
+  cancel-in-progress: false
+jobs:
+  publish:
+    # Публикация только явным запуском из основной ветки репозитория.
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: "0.12.10"
+      - run: uv sync --project backend --python 3.12 --locked
+      - run: uv run --project backend --locked pytest backend/tests -q
+      - run: docker build --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" --tag scenic-drive:check .
+      - name: Check image before publishing
+        run: |
+          docker run -d --name scenic-smoke -p 127.0.0.1:8080:8000 scenic-drive:check
+          curl --fail --silent --retry 20 --retry-connrefused --retry-delay 1 http://127.0.0.1:8080/api/health
+          curl --fail --silent http://127.0.0.1:8080/ > /dev/null
+          curl --fail --silent http://127.0.0.1:8080/api/scenic-segments > /dev/null
+      - name: Publish to GitHub Container Registry
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          docker tag scenic-drive:check "$image:latest"
+          docker tag scenic-drive:check "$image:sha-$GITHUB_SHA"
+          docker push "$image:sha-$GITHUB_SHA"
+          docker push "$image:latest"
+          printf 'Published: `%s:latest` and `%s:sha-%s`\n' "$image" "$image" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+      - if: failure()
+        run: docker logs scenic-smoke
+      - if: always()
+        run: docker rm -f scenic-smoke

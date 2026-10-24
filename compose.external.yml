@@ -1,0 +1,17 @@
+name: scenic-drive-external
+services:
+  app:
+    image: scenic-drive:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8080:8000"
+    environment:
+      # Отдельные SCENIC_* переменные не подхватят 127.0.0.1:10809 из .env
+      # обычного Python-запуска: внутри контейнера это другой localhost.
+      OSRM_BASE_URL: ${SCENIC_OSRM_BASE_URL:-https://router.project-osrm.org}
+      OSRM_PROXY_URL: ${SCENIC_OSRM_PROXY_URL:-}
+      NO_PROXY: localhost,127.0.0.1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

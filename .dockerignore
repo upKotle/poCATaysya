@@ -1,0 +1,14 @@
+.git
+.github
+.env
+.env.*
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/dist
+**/*.pyc
+data/osrm
+*.osm.pbf
+*.osrm*
+docs

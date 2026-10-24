@@ -1,0 +1,164 @@
+[
+  {
+    "osm_way_id": 30475662,
+    "water": 0.0,
+    "architecture": 0.7,
+    "greenery": 0.6
+  },
+  {
+    "osm_way_id": 39810392,
+    "water": 0.8,
+    "architecture": 0.6,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 57919231,
+    "water": 0.0,
+    "architecture": 0.8,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 10857188,
+    "water": 0.0,
+    "architecture": 0.6,
+    "greenery": 0.6
+  },
+  {
+    "osm_way_id": 23413059,
+    "water": 0.7,
+    "architecture": 0.4,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 46431769,
+    "water": 0.8,
+    "architecture": 0.6,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 45446979,
+    "water": 0.8,
+    "architecture": 0.6,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 533065212,
+    "water": 0.0,
+    "architecture": 0.6,
+    "greenery": 0.6
+  },
+  {
+    "osm_way_id": 180303855,
+    "water": 0.8,
+    "architecture": 0.6,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 155340229,
+    "water": 0.85,
+    "architecture": 0.2,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 46494574,
+    "water": 0.85,
+    "architecture": 0.35,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 46494573,
+    "water": 0.75,
+    "architecture": 0.4,
+    "greenery": 0.6
+  },
+  {
+    "osm_way_id": 46490633,
+    "water": 0.2,
+    "architecture": 0.1,
+    "greenery": 0.85
+  },
+  {
+    "osm_way_id": 136228419,
+    "water": 0.1,
+    "architecture": 0.3,
+    "greenery": 0.8
+  },
+  {
+    "osm_way_id": 22323173,
+    "water": 0,
+    "architecture": 0.9,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 25058037,
+    "water": 0,
+    "architecture": 0.9,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 594673934,
+    "water": 0,
+    "architecture": 0.85,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 45418246,
+    "water": 0,
+    "architecture": 0.9,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 156291476,
+    "water": 0,
+    "architecture": 0.8,
+    "greenery": 0.1
+  },
+  {
+    "osm_way_id": 292411259,
+    "water": 0,
+    "architecture": 0.9,
+    "greenery": 0.15
+  },
+  {
+    "osm_way_id": 37995541,
+    "water": 0,
+    "architecture": 0.85,
+    "greenery": 0.15
+  },
+  {
+    "osm_way_id": 86323004,
+    "water": 0,
+    "architecture": 0.8,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 23430306,
+    "water": 0.7,
+    "architecture": 0.3,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 24351660,
+    "water": 0.7,
+    "architecture": 0.2,
+    "greenery": 0.2
+  },
+  {
+    "osm_way_id": 240801400,
+    "water": 0,
+    "architecture": 0.2,
+    "greenery": 0.85
+  },
+  {
+    "osm_way_id": 6905269,
+    "water": 0,
+    "architecture": 0.3,
+    "greenery": 0.85
+  },
+  {
+    "osm_way_id": 24699570,
+    "water": 0,
+    "architecture": 0.2,
+    "greenery": 0.8
+  }
+]

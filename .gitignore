@@ -1,0 +1,19 @@
+backend/.venv/
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+.env
+*.osm.pbf
+*.osrm*
+.env.*
+!.env.example
+data/osrm/
+.DS_Store
+*.log
+playwright-report/
+test-results/
+!.env.docker.example
+
+# Локальный журнал разработки
+docs/verification.md
